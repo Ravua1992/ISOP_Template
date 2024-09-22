@@ -1,0 +1,89 @@
+project:
+  type: book
+  
+  output-dir: _docs
+book:
+  title: "Population Pharmacokinetic Report"
+  chapters:
+    - index.qmd 
+    - sec/executive_summary.qmd
+    - sec/synobsis.qmd 
+    - sec/introduction.qmd
+    - sec/methods.qmd
+    - sec/results.qmd
+    - sec/discussion.qmd
+    - sec/conclusion.qmd
+    - sec/final.qmd 
+  appendices: 
+    - append/tez.qmd
+
+format: 
+  pdf:
+    documentclass: scrreprt
+    template-partials: 
+      - engine/partials/before-body.tex
+      - engine/partials/title.tex 
+    keep-tex: true
+    toc: true
+    toccolor: blue
+    lof: true
+    lot: true
+    toc-title: Contents
+    link-citations: true
+    number-sections: true
+    colorlinks: true
+    classoption:
+      - toc=chapterentrywithdots
+      - 11pt
+      - headings=small
+    crossref: 
+      lof-title: Figures in-text 
+      lot-title: Tables in-text 
+      appendix-title: Supplementary materials
+    hyperrefoptions:
+    - linktoc=all
+    - pdfpagemode=FullScreen
+    - bookmarks=true
+    geometry:
+      - margin=.75in
+      - left=1in
+      - right=1in
+      - top=1in
+      - bottom=3cm
+      - footskip=2cm
+      - marginparwidth=1in
+      - marginparsep=0.75cm
+    include-in-header: 
+      - engine/header.tex
+    mainfont: Times New Roman
+    mainfontoptions:
+        - Path=./engine/misc/Times/
+        - Extension=.ttf
+        - UprightFont=*
+        - BoldFont=* Bold
+    sansfont: Times New Roman
+    sansfontoptions:
+        - Path=./engine/misc/Times/
+        - Extension=.ttf
+        - UprightFont=*
+        - BoldFont=* Bold
+
+
+# Meta for cover page 
+
+reoport-number: "PPK-001"
+title: "Population Pharmacokinetic Report"
+drug-name: "Drug A"
+indication: "Nothing"
+study-number: 12345
+sponser: ISOP
+author: MMJ 
+review: MMJ
+approve: MMJ
+date: today
+date-format: "DD MMM YYYY"
+status: DRAFT 
+copyright: >
+          This is a Company Name. document that contains confidential information. It is intended solely for the recipient and must not be disclosed to any other party. This material may be used only for evaluating or conducting clinical investigations; any other proposed use requires written consent from Company Name.
+
+

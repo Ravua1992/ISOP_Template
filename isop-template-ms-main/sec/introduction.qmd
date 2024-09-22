@@ -1,0 +1,91 @@
+# INTRODUCTION {#sec-introduction} 
+
+## Exploratory Data Analysis 
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(xgxr)
+library(data.table)
+#flag for labeling figures as draft
+status = "DRAFT"
+
+# ggplot settings
+xgx_theme_set()
+
+#directories for saving individual graphs
+dirs = list(
+  parent_dir = "Parent_Directory",
+  rscript_dir  = "./",
+  rscript_name = "Example.R",
+  results_dir  = "./",
+  filename_prefix   = "",
+  filename     = "Example.png")
+
+
+setwd("/cloud/project/ISOP_Template/isop-template-ms-main/example_ppk_nonmem_1/")
+data<-read.csv("data_run1_sim.csv",header = T)
+
+
+total_patients = data %>%
+  filter(!duplicated(ID)) %>%
+  tally() %>%
+  rename(n_patients = n) %>%
+  mutate(TRT_low2high = "TOTAL NUMBER")
+
+dose = data %>%
+  filter(EVID == 1)
+
+dose_summ = data %>%
+  group_by(ID) %>%
+  summarize(total_dose = sum(AMT))
+
+dose_summary = data.frame(
+  patients_that_never_received_drug = sum(dose_summ$total_dose == 0),
+  entries_where_AMT_equals_0        = sum(dose$AMT == 0),
+  entries_where_AMT_greater_than_0  = sum(dose$AMT > 0)) %>%
+  t() %>%
+  as.data.frame() %>%
+  rename(N = V1)
+
+
+```
+
+## PK Plots 
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+
+gg <- ggplot(data = data, aes(x = TIME, y = DV)) 
+gg <- gg + geom_line(aes(group = ID, color = factor(ID)), size = 1, alpha = 0.5) 
+gg <- gg + xgx_scale_y_log10()
+gg <- gg + labs(y = "conc_label", color = "trtact_label")
+gg <- gg + xgx_annotate_status(status) 
+gg <- gg + xgx_annotate_filenames(dirs)+ theme(legend.position = "none")
+
+#if saving copy of figure, replace xgx_annotate lines with xgx_save() shown below:
+#xgx_save(width,height,dirs,"filename_main",status)
+print(gg)
+
+```
+
+## Covariate Summary 
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+
+#--default (count)
+ggplot(data, aes(x=WT)) + 
+	geom_histogram(binwidth = 3)   
+
+```

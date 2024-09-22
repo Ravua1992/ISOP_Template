@@ -1,0 +1,94 @@
+PsN version: 5.3.0
+Run started: 2024-06-25 at 22:38:45
+Run finished: 2024-06-25 at 22:39:53
+version_and_option_info.txt is overwitten if the run is restarted later using option -directory.
+The original file from the first call is saved as original_version_and_option_info.txt.
+
+Command:
+/opt/psn/PsN-5.3.0/bin/vpc run2.mod -samples=500 -n_sim=10 -threads=11 -lst=run2.lst -predcorr
+
+NONMEM:
+/opt/nonmem/nonmem7.5.0
+
+Actual values optional vpc options (undefined values not listed):
+-bin_array=
+-boxcox_lambda=0
+-confidence_interval=95
+-copy_data=1
+-dv=DV
+-fine_pi=0
+-flip_comments=0
+-idv=TIME
+-in_filter=
+-keep_estimation=0
+-levels=
+-lnDV=0
+-lst_file=run2.lst
+-mix=0
+-n_simulation_models=10
+-noprediction=0
+-offset_rawres=1
+-predcorr=1
+-sim_table=
+-so=0
+-varcorr=0
+
+Actual values optional PsN (common) options (undefined values not listed):
+-abort_on_fail=0
+-accepted_ofv_difference=0.5
+-add_retries=0
+-always_datafile_in_nmrun=1
+-check_nmtran=0
+-clean=3
+-compress=0
+-condition_number_limit=1000
+-correlation_limit=0.85
+-crash_restarts=4
+-debug_rmd=0
+-degree=0.1
+-directory=/usr/bigsky/IL-33/POWER_CALC/MODEL/vpc_dir4/
+-display_iterations=0
+-handle_crashes=1
+-handle_msfo=0
+-html=0
+-large_omega_cv_limit=0.8
+-large_sigma_cv_limit=0.8
+-large_theta_cv_limit=0.5
+-last_est_complete=0
+-lsf_sleep=3
+-min_retries=0
+-missing_data_token=-99
+-model_subdir=0
+-near_bound_sign_digits=2
+-near_zero_boundary_limit=0.01
+-nice=19
+-nm_output=ext,cov,phi
+-nm_version=default
+-nmfe=1
+-nodes=0
+-pdf=1
+-picky=0
+-prepend_model_file_name=0
+-quick_summarize=0
+-retries=0
+-rmarkdown=1
+-rplots=1
+-run_on_lsf=0
+-run_on_sge=1
+-run_on_slurm=0
+-run_on_torque=0
+-run_on_ud=0
+-run_on_zink=0
+-seed=197142
+-send_email=0
+-sge_prepend_flags=-cwd -v SGE_IN=WORKDIR,SGE_OUT=WORKDIR
+-shrinkage=0
+-sign_digits_off_diagonals=2
+-significant_digits_accept=0
+-so=0
+-template_directory_rplots=/opt/psn/PsN-5.3.0/perl5/PsN_5_3_0/R-scripts
+-template_file_rplots=vpc_default.Rmd
+-threads=11
+-tweak_inits=1
+-verbose=0
+-zip=1

@@ -1,0 +1,205 @@
+# RESULTS {#sec-results}
+
+For each analysis (e.g. PopPK, PK/PD analysis, exposure-response analysis and simulations), an own sub-section should be included. 
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+
+library(xpose4)
+library(xpose)
+#install.packages("plotly")
+
+```
+
+## Exploratory Data Analysis 
+
+Concentration-time profiles of drug X following oral administration of the first dose on Day 1 in healthy subjects are presented in Figure 2. Additional concentration-time profiles of drug X are presented in Appendix 2. A list of samples excluded from the analysis is presented in Appendix 2. 
+Drug X was rapidly absorbed following oral administration and declined in a multi-exponential manner. Doses ranged from 5 mg to 100 mg. Drug X exposure was dose proportional, and the accumulation ratio based on 80 mg once daily dosing was 1.3 in Study 123. 
+
+
+## Model Development 
+
+### Base Model 
+
+
+A population PK analysis was performed based on rich and sparse samples collected in Phase 1 and Phase 3 studies in order to identify the structural model. Highlights of the base population PK analysis are presented below and in Appendix 2.
+1- and 2-compartment models with linear elimination were tested. The 1-compartment model resulted in the lowest OFV. A first-order absorption rate constant (Ka) with lag time (Tlag) was used to characterize the rapid absorption of drug X. A mixed error model (additive and proportional) resulted in a substantially lower OFV relative to proportional or additive error models.
+Additional model refinements are presented below.
+An allometric function accounting for body weight effect on clearance (CL/F) and volume of distribution (V/F) was included in the model (run008). In addition, the effect of creatinine clearance was added on CL/F since the drug was previously demonstrated to undergo important renal excretion (run019).
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+
+# Define your PDF path
+setwd("/cloud/project/ISOP_Template/isop-template-ms-main/example_ppk_nonmem_1/")
+
+# Convert the first page of the PDF to an image
+xpdb <- xpose.data(1)# Higher dpi gives better quality
+xpdb1<-xpose_data(runno = '1')
+prm_table(xpdb1)
+
+
+basic.gof(xpdb,col=1,type='p')
+
+
+
+samp.id<-sample(xpdb@Data$ID,12)  # 12 random IDs
+
+ind.plots(xpdb,subset="ID%in%samp.id")
+
+
+ranpar.hist(xpdb)
+
+
+ranpar.qq(xpdb)
+
+
+ranpar.splom(xpdb)
+
+
+ranpar.vs.cov(xpdb)
+
+```
+
+### Covariate Model 
+
+Potential relationships between PK parameters (random effects) of drug X and categorical and continuous covariates from the base PK model (run019) are presented in Appendix 2. A stepwise covariate analysis was performed to identify sources of variability in PK parameters of drug X.
+Results for covariate analysis are presented in Appendix 2. A summary of covariates resulting in the maximum reduction of the OFV and included in each step of the analysis is presented in Table 6.
+
+Covariates were evaluated using a forward inclusion approach with p<0.01 (ΔOFV>6.6349). The effect of fasted status on Ka resulted in the most important decrease in OFV as part of the first step of the analysis (ΔOVF = -322.051). In the second step, the effect of dose on CL/F resulted in the most important decrease in OFV (ΔOVF = -161.224). In the 3rd and 4th steps, the effect of gender on V/F and CL/F resulted in the most important decrease in OFV (ΔOVF = -50.805and -72.726, respectively). In the 5th step, the effect of ESRD on CL/F resulted in the most important decrease in OFV (ΔOVF = -16.624). In the 6th step, the effect of dose on Ka resulted in the most important decrease in OFV (ΔOVF = -71.311). In the 7th step, the effect of formulation Ka resulted in the most important decrease in OFV (ΔOVF = -21.636). In the 8th step, the effect of disease status (healthy subjects vs. narcolepsy/OSA patients) resulted in the most important decrease in OFV (ΔOVF = -17.684). Additional information is available in Appendix 2 (Section 12.36). 
+During the backward testing, none of the covariate were removed. Additional information is available in Appendix 2. 
+The bootstrap method was used to reduce the full model by removing covariates for which the 95% PIs included the null value relative to the reference population. Based on the estimates of the population PK model, concentration-time profiles of drug X were simulated (1000 replicates). Statistically significant covariates were retained in the reduced final model if the nonparametric 95% PIs excluded the null value relative to the reference population. All the covariates tested in the full model resulted in a statistically significant effect,  and were retained in the final model.
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+
+# Define table data
+metadata <- list(
+  steps = 1:6,
+  covariates = c(
+    "Fasted status on Ka", 
+    "Dose on CL/F", 
+    "Gender on V/F", 
+    "Dose on Ka", 
+    "Formulation on Ka", 
+    "Disease Status on CL/F"
+  ),
+  base_ofv = c(93576, 93254, 93092, 93042, 92881, 92859),
+  new_ofv = c(93254, 93092, 93042, 92969, 92859, 92842),
+  delta_ofv = c(-322, -161, -50, -72, -21, -17)
+)
+
+# Create a data frame from the metadata
+table_data <- data.frame(
+  Step = metadata$steps,
+  Covariates = metadata$covariates,
+  `Base_OFV` = metadata$base_ofv,
+  `New_OFV` = metadata$new_ofv,
+  `ΔOFV` = metadata$delta_ofv
+)
+
+# Display the table
+library(knitr)
+kable(table_data, caption = "Covariate Model Results")
+
+```
+
+### Final Model 
+
+Typical population PK parameters of drug X derived with the final model (run005) are presented in Table 7. The continuous covariates (CRCL and weight) were centered to a reference value in the population PK analysis (116.5 mL/min and 92.5 kg). The reference value is <1% different than the median value in the Phase 3 studies.
+
+The population estimates of CL/F and V/F for drug X were 19.49 L/h and 198.72 L, respectively, and are for a male patient who is 92.5 kg, has a CRCL of 116.5 mL/min, and is taking a dose of 150 mg. Based on the population PK model, the half-life of drug X was 7.07 h.
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+
+setwd("/cloud/project/ISOP_Template/isop-template-ms-main/example_ppk_nonmem_1/")
+# Convert the first page of the PDF to an image
+xpdb2 <- xpose.data(2)# Higher dpi gives better quality
+
+xpdb2a<-xpose_data(runno = '2')
+prm_table(xpdb2a)
+
+#xpdb2a <- update_themes(xpdb2a,theme_xp_xpose4)
+
+
+## Basic goodness-of-fit plots
+### Plots of the independent variable (IDV)
+dv_vs_idv(xpdb2a)
+ipred_vs_idv(xpdb2a)
+pred_vs_idv(xpdb2a)
+dv_preds_vs_idv(xpdb2a)
+
+### DV vs. PREDs plots
+
+dv_vs_pred(xpdb2a)
+dv_vs_ipred(xpdb2a)
+
+### Residula plots 
+
+res_vs_idv(xpdb2a, res = 'CWRES')
+res_vs_pred(xpdb2a, res = 'CWRES')
+absval_res_vs_idv(xpdb2a, res = 'CWRES')
+absval_res_vs_pred(xpdb2a, res = 'CWRES')
+
+### Individual Plots 
+
+ind_plots(xpdb2a, page = 1)
+
+## Distributions
+### Histograms and density plots
+
+prm_distrib(xpdb2a) 
+eta_distrib(xpdb2a)
+res_distrib(xpdb2a)
+cov_distrib(xpdb2a)
+
+# xpdb2a %>% 
+#   eta_distrib(title = 'Eta distribution') %>% 
+#   plotly::ggplotly()
+### QQ plots
+
+prm_qq(xpdb2a)
+eta_qq(xpdb2a)
+res_qq(xpdb2a)
+cov_qq(xpdb2a)
+
+```
+
+## Model Evaluation 
+
+Visual predictive checks were performed for the full PPK model stratified by patient population and dosing regimens, and the results are in Figure 5. Overall, the pcVPC results indicate that the model adequately characterized the data and predicted concentrations to be used for E-R efficacy and safety analyses. The observed 5th, 50th (median), and 95th percentiles generally fall within the 90% PI (the shaded band) up to the first 60 days after the previous dose and the first 600 days after the first dose (trough concentrations). A pcVPC stratified by body weight is provided in Appendix 3.
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+
+vpc_data(xpdb2a, opt = vpc_opt(pred_corr = TRUE), vpc_type="continuous", psn_folder='/cloud/project/ISOP_Template/isop-template-ms-main/example_ppk_nonmem_1/vpc_dir5') %>%
+vpc()
+
+```
+
+## Model Application 
+
+Model-based simulations were performed to evaluate drug X CL under various conditions, estimate effective half-life, predict exposure metrics for 60 mg Q4W vs 30 mg Q2W dose regimens, and assess the clinical relevance of covariates of interest such as sex, hepatic function, renal function, race, manufacture process, and shorter infusion time in the final PPK model. The final model was used in these simulations.
+
+### Covariate Model Evaluation of Effect of Sex
+
+Sex was a significant covariate on CL and VC (Figure 6), with male subjects having a higher CL and higher Vc than female subjects. Comparisons of model predicted drug exposure at 60 mg Q4W by sex are presented in Figure 6. In general, exposures were higher in female subjects than males for subjects who received 60 mg Q4W.  
+
+
+Sex was a significant covariate on CL and VC (Figure 6), with male subjects having a higher CL and higher Vc than female subjects. Comparisons of model predicted drug exposure at 60 mg Q4W by sex are presented in Figure 6. In general, exposures were higher in female subjects than males for subjects who received 60 mg Q4W.  
+
+### Covariate Model Comparison of 30 mg Q2W and 60 Q4W Regimens
+
+The predicted geometric means of drug X exposure (Cmin1, Cmax1, Cavg1, Cavd28, Cminss, Cmaxss, and Cavgss) at 60 mg Q4W and 30 mg Q2W are summarized in Table 5.  As expected, Cavgss was similar across the two different regimens (difference < 5%). The exposures were higher with drug X 30 mg Q2W relative to 60 mg Q4W by approximately 51% for Cmind28 and 42% for Cminss. The exposures were lower with drug X 30 mg Q2W relative to 60 mg Q4W by approximately 50% for Cmax1 and 31% for Cmaxss, which were also expected.
+

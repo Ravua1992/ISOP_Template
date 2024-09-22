@@ -1,0 +1,19 @@
+\usepackage[headsepline,footsepline]{scrlayer-scrpage}
+\usepackage{cleveref}
+\pagestyle{scrheadings}
+\lohead{Population PK Report \\ Report No.: $report-number$}
+\rohead{$status$}
+\ifoot{CONFIDENTIAL}
+\ofoot{$date$} % empty 
+\cfoot{Page \thepage}
+
+\renewcommand*\chapterpagestyle{scrheadings}
+
+\renewcommand{\glsnamefont}[1]{#1}
+
+\setlength\LTleft{0pt}
+\setlength\LTright{0pt}
+\setlength\glsdescwidth{0.8\hsize}
+\loadglsentries{$abbr$}
+\setglossarystyle{mystyle}
+\makenoidxglossaries

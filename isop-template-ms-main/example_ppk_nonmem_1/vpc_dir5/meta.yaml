@@ -1,0 +1,142 @@
+---
+NONMEM_directory: /opt/nonmem/nonmem7.5.0
+NONMEM_version: 7.5
+PsN_version: 5.3.0
+R_LIB_PATHS:
+  - /opt/psn/PsN-5.3.0/perl5/PsN_5_3_0/Rlib
+  - /lrlhps/apps/R/qualified/R-4.1.2/lib64/R/library
+R_packages:
+  - assertthat-0.2.1 from CRAN (R 4.1.2)
+  - cli-3.2.0 from CRAN (R 4.1.2)
+  - codetools-0.2-18 from CRAN (R 4.1.2)
+  - colorspace-2.0-3 from CRAN (R 4.1.2)
+  - crayon-1.5.0 from CRAN (R 4.1.2)
+  - DBI-1.1.1 from CRAN (R 4.1.2)
+  - digest-0.6.29 from CRAN (R 4.1.2)
+  - dplyr-1.0.8 from CRAN (R 4.1.2)
+  - ellipsis-0.3.2 from CRAN (R 4.1.2)
+  - evaluate-0.15 from CRAN (R 4.1.2)
+  - fansi-1.0.2 from CRAN (R 4.1.2)
+  - fastmap-1.1.0 from CRAN (R 4.1.2)
+  - foreach-1.5.2 from CRAN (R 4.1.2)
+  - gam-1.20 from CRAN (R 4.1.2)
+  - generics-0.1.2 from CRAN (R 4.1.2)
+  - ggplot2-3.3.5 from CRAN (R 4.1.2)
+  - glue-1.6.1 from CRAN (R 4.1.2)
+  - gtable-0.3.0 from CRAN (R 4.1.2)
+  - htmltools-0.5.2 from CRAN (R 4.1.2)
+  - iterators-1.0.14 from CRAN (R 4.1.2)
+  - knitr-1.37 from CRAN (R 4.1.2)
+  - lattice-0.20-45 from CRAN (R 4.1.2)
+  - lifecycle-1.0.1 from CRAN (R 4.1.2)
+  - magrittr-2.0.2 from CRAN (R 4.1.2)
+  - munsell-0.5.0 from CRAN (R 4.1.2)
+  - pillar-1.7.0 from CRAN (R 4.1.2)
+  - pkgconfig-2.0.3 from CRAN (R 4.1.2)
+  - PsNR-0.2.1 from local (/opt/psn/src/PsN-Source/PsNR)
+  - purrr-0.3.4 from CRAN (R 4.1.2)
+  - R6-2.5.1 from CRAN (R 4.1.2)
+  - rlang-1.0.1 from CRAN (R 4.1.2)
+  - rmarkdown-2.11 from CRAN (R 4.1.2)
+  - scales-1.1.1 from CRAN (R 4.1.2)
+  - sessioninfo-1.2.2 from CRAN (R 4.1.2)
+  - stringi-1.7.6 from CRAN (R 4.1.2)
+  - stringr-1.4.0 from CRAN (R 4.1.2)
+  - tibble-3.1.6 from CRAN (R 4.1.2)
+  - tidyselect-1.1.2 from CRAN (R 4.1.2)
+  - utf8-1.2.2 from CRAN (R 4.1.2)
+  - vctrs-0.3.8 from CRAN (R 4.1.2)
+  - vpc-1.2.2 from CRAN (R 4.1.2)
+  - withr-2.4.3 from CRAN (R 4.1.2)
+  - xfun-0.29 from CRAN (R 4.1.2)
+  - xpose4-4.7.1 from CRAN (R 4.1.2)
+  - yaml-2.3.5 from CRAN (R 4.1.2)
+R_system: 'x86_64, linux-gnu'
+R_version: 4.1.2
+command_line: /opt/psn/PsN-5.3.0/bin/vpc run1.mod -samples=500 -n_sim=10 -threads=11 -lst=run1.lst -predcorr
+common_options:
+  abort_on_fail: 0
+  accepted_ofv_difference: 0.5
+  add_retries: 0
+  always_datafile_in_nmrun: 1
+  check_nmtran: 0
+  clean: 3
+  compress: 0
+  condition_number_limit: 1000
+  correlation_limit: 0.85
+  crash_restarts: 4
+  debug_rmd: 0
+  degree: 0.1
+  directory: /usr/bigsky/IL-33/POWER_CALC/MODEL/vpc_dir5/
+  display_iterations: 0
+  handle_crashes: 1
+  handle_msfo: 0
+  html: 0
+  large_omega_cv_limit: 0.8
+  large_sigma_cv_limit: 0.8
+  large_theta_cv_limit: 0.5
+  last_est_complete: 0
+  lsf_sleep: 3
+  min_retries: 0
+  missing_data_token: -99
+  model_subdir: 0
+  near_bound_sign_digits: 2
+  near_zero_boundary_limit: 0.01
+  nice: 19
+  nm_output: 'ext,cov,phi'
+  nm_version: default
+  nmfe: 1
+  nodes: 0
+  pdf: 1
+  picky: 0
+  prepend_model_file_name: 0
+  quick_summarize: 0
+  retries: 0
+  rmarkdown: 1
+  rplots: 1
+  run_on_lsf: 0
+  run_on_sge: 1
+  run_on_slurm: 0
+  run_on_torque: 0
+  run_on_ud: 0
+  run_on_zink: 0
+  seed: 492618
+  send_email: 0
+  sge_prepend_flags: '-cwd -v SGE_IN=WORKDIR,SGE_OUT=WORKDIR'
+  shrinkage: 0
+  sign_digits_off_diagonals: 2
+  significant_digits_accept: 0
+  so: 0
+  template_directory_rplots: /opt/psn/PsN-5.3.0/perl5/PsN_5_3_0/R-scripts
+  template_file_rplots: vpc_default.Rmd
+  threads: 11
+  tweak_inits: 1
+  verbose: 0
+  zip: 1
+finish_time: 2024-06-25 22:41:31
+model_files:
+  - /usr/bigsky/IL-33/POWER_CALC/MODEL/run1.mod
+start_time: 2024-06-25 22:40:31
+tool_name: vpc
+tool_options:
+  bin_array: ''
+  boxcox_lambda: 0
+  confidence_interval: 95
+  copy_data: 1
+  dv: DV
+  fine_pi: 0
+  flip_comments: 0
+  idv: TIME
+  in_filter: ''
+  keep_estimation: 0
+  levels: ''
+  lnDV: 0
+  lst_file: run1.lst
+  mix: 0
+  n_simulation_models: 10
+  noprediction: 0
+  offset_rawres: 1
+  predcorr: 1
+  sim_table: ''
+  so: 0
+  varcorr: 0
